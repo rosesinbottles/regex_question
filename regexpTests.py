@@ -2,7 +2,8 @@ import unittest
 from regexpADP import RegexpADP
 
 
-class TestRegexpFunctions(unittest.TestCase):
+class TestRegexpADPFunctions(unittest.TestCase):
+    """Test cases for the RegepADP class"""
 
     def test_match(self):
         regexp = RegexpADP('hello.world')
