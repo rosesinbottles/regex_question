@@ -40,35 +40,38 @@ class RegexpADP():
                         candidate = testChar + candidate
                         continue
 
-                    # We have a second chance if we have just hit a question mark
-                    # in this case, we assume that the testCharacter is a match and
-                    # decrement the index on our pattern string to account for the ?.
-                    # We then test to see whether
-                    elif(patternChar == '?'):
+                    # With the star or question-mark match, we have a slightly different method
+                    elif(patternChar == '*' or patternChar == '?'):
+
+                        # grab the character to the left of the star.
+                        # We are alowed to match zero or more of these
+                        repeatableChar = self.pattern[patternIndex-1]
+
+                        # Increment our pattern marker (move it left one) to account for the "matched" character
                         patternIncrement += 1
-                        if(self.naturalMatch(testChar, self.pattern[patternIndex-1])):
-                            candidate = testChar + candidate
-                            continue
-                        elif(self.naturalMatch(testChar, self.pattern[patternIndex-2])):
-                            candidate = testChar + candidate
-                            patternIncrement += 1
-                            continue
-                        else:
-                            candidate = ''
-                            break
 
-                    elif(patternChar == '*'):
+                        # Our string counter will need to account for the * character as well
+                        testIncrement -= 1
 
-                        k = 1
-                        while(self.naturalMatch(testString[testIndex-k], self.pattern[patternIndex-1])):
+                        # Loop along out test string and add all consecutive characters matching
+                        # our "matched" character
+                        k = 0
+                        while(self.naturalMatch(testString[testIndex-k], repeatableChar)):
+                            testIncrement += 1
                             k += 1
                             candidate = testChar + candidate
-                            testIncrement += 1
+                            # If we have a question mark, we bounce after one uteration
+                            if(patternChar == '?'):
+                                break
+
+                        # A formality
+                        continue
 
                     else:
                         candidate = ''
                         break
             if(len(candidate)):
+                # print "appending candidate {}".format(candidate)
                 retval.insert(0, candidate)
         return retval
 

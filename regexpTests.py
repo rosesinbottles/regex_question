@@ -61,22 +61,33 @@ class TestRegexpADPFunctions(unittest.TestCase):
         regexp = RegexpADP('abcd?efg')
         self.assertEqual(regexp.match("bcefg"), [])
 
+    def test_match_question_seven(self):
+        regexp = RegexpADP('ab')
+        self.assertEqual(regexp.match("aaaabbbb"), ['ab'])
+
     def test_match_star_one(self):
         regexp = RegexpADP('hello*world')
-        # self.assertEqual(regexp.match("hellworld"), ['hellworld'])
+        self.assertEqual(regexp.match("hellworld"), ['hellworld'])
 
     def test_match_star_two(self):
         regexp = RegexpADP('hello*world')
-        # self.assertEqual(regexp.match("helloworld"), ['helloworld'])
+        self.assertEqual(regexp.match("helloworld"), ['helloworld'])
 
     def test_match_star_three(self):
         regexp = RegexpADP('hello*world')
-        # self.assertEqual(regexp.match("hellooooworld"), ['hellooooworld'])
+        self.assertEqual(regexp.match("hellooooworld"), ['hellooooworld'])
 
     def test_match_star_four(self):
         regexp = RegexpADP('hello*world')
-        # self.assertEqual(regexp.match("heloworld"), [])
+        self.assertEqual(regexp.match("heloworld"), [])
 
+    def test_match_question_dot_one(self):
+        regexp = RegexpADP('hell?.')
+        self.assertEqual(regexp.match("hello"), ["hello"])
+
+    def test_match_question_dot_two(self):
+        regexp = RegexpADP('hell?.')
+        self.assertEqual(regexp.match("help"), ["help"])
 
 if __name__ == '__main__':
     unittest.main()
