@@ -83,7 +83,7 @@ class TestRegexpADPFunctions(unittest.TestCase):
 
     def test_match_question_dot_one(self):
         regexp = RegexpADP('hell?.')
-        self.assertEqual(regexp.match("hello"), ["hello"])
+        self.assertEqual(regexp.match("hello"), ["hell", "hello"])
 
     def test_match_question_dot_two(self):
         regexp = RegexpADP('hell?.')
